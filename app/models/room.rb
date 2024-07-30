@@ -3,8 +3,7 @@ class Room < ApplicationRecord
 
   before_save :check_occupancy
 
-  def check_occupancy
-    puts "Current Occupancy: #{current_occupancy}"
-    puts "Current number of Patients: #{patients.length}"
+  def current_occupancy
+    patients.count
   end
 end
