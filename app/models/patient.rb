@@ -3,16 +3,11 @@ class Patient < ApplicationRecord
 
   validates :gender, inclusion: { in: %w[Male Female Undeclared] }
 
-  before_save :check_room_availability
+  validate :check_room_availability
 
   def check_room_availability
-    if new_valid_room? || room.current_occupancy < room.capacity
-      errors.add(:base, "Friendship between these users already exists")
+    if room_changed? && room.present? && !room.space_left_in_room?
+      errors.add(:base, "This room is full")
     end
   end
-
-  def new_valid_room?
-    room_changed? && !room.nil?
-  end
-
 end
