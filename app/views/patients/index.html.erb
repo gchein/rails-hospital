@@ -1,0 +1,27 @@
+<div class="container">
+  <h1 class="my-3">All Patients:</h1>
+  <div class="row d-flex justify-content-between">
+    <% @patients.each do |patient| %>
+      <div class="card col-3 mx-1 my-3">
+        <%= link_to patient.name, patient %>
+        <% if patient.room%>
+          <p>Staying at: <%= link_to "Room #{patient.room.id}", room_path(patient.room) %></p>
+        <% else %>
+          <p>Patient currently does not have a room</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "Add a new patient", new_patient_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "See all rooms", rooms_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="container my-3">
+  <%= simple_form_for @patient do |f| %>
+  <%= f.input :name %>
+  <%= f.input :age %>
+  <%= f.input :cpf %>
+  <%= f.input :gender, collection: Patient::AVAILABLE_GENDERS %>
+  <%= f.button :submit, class: "btn btn-primary" %>
+  <% end %>
+</div>

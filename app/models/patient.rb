@@ -1,9 +1,11 @@
 class Patient < ApplicationRecord
+  AVAILABLE_GENDERS = %w[Male Female Non-Binary Undeclared]
+
   belongs_to :room, optional: true
   has_many :appointments
   has_many :doctors, through: :appointments
 
-  validates :gender, inclusion: { in: %w[Male Female Undeclared] }
+  validates :gender, inclusion: { in: AVAILABLE_GENDERS }
 
   validate :check_room_availability
 

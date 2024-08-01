@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="my-3">All Rooms:</h1>
+  <div class="row my-3 d-flex">
+    <% @rooms.each do |room| %>
+      <div class="card col-2 mx-3">
+        <div class="align-self-center">
+          <%= link_to "Room #{room.id}", room %> <%="(#{room.current_occupancy} / #{room.capacity})" %>
+        </div>
+        <p class="mt-3 mb-0">Current patients:</p>
+        <ul>
+        <% room.patients.each do |patient| %>
+          <li><%= link_to patient.name, patient %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "Create new Room", new_room_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "See all patients", patients_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="container">
+  <h1 class="my-3">Patient <%= @patient.name %></h1>
+  <ul>
+    <li>Age: <%= @patient.age %></li>
+    <li>Gender: <%= @patient.gender %></li>
+    <% if @patient.under_care %>
+      <li> Staying at: <%= link_to "Room #{@patient.room.id}", room_path(@patient.room) %></li>
+    <% else %>
+      <li>Patient currently not under care</li>
+    <% end %>
+  </ul>
+</div>
