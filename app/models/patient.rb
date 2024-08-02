@@ -6,6 +6,7 @@ class Patient < ApplicationRecord
   has_many :doctors, through: :appointments
 
   validates :gender, inclusion: { in: AVAILABLE_GENDERS }
+  validates :name, :age, :gender, presence: true
 
   validate :check_room_availability
 

@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   def show
     @room = Room.includes(:patients).find(params[:id])
-    @room_patients = @room.patients
+    # Include current_occupancy as a scope?
   end
 
   def index

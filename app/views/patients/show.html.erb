@@ -3,10 +3,24 @@
   <ul>
     <li>Age: <%= @patient.age %></li>
     <li>Gender: <%= @patient.gender %></li>
-    <% if @patient.under_care %>
-      <li> Staying at: <%= link_to "Room #{@patient.room.id}", room_path(@patient.room) %></li>
+    <% if @room %>
+      <li> Staying at: <%= link_to "Room #{@room.id}", room_path(@room) %></li>
+    <% elsif @patient.under_care %>
+      <li>Patient currently does not have a room</li>
     <% else %>
       <li>Patient currently not under care</li>
     <% end %>
   </ul>
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "Edit patient", edit_patient_path(@patient), class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "See all patients", patients_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
 </div>
