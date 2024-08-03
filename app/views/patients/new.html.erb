@@ -6,4 +6,11 @@
   <%= f.input :gender, collection: Patient::AVAILABLE_GENDERS %>
   <%= f.button :submit, class: "btn btn-primary" %>
   <% end %>
+
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "Back to all Patients", patients_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
 </div>

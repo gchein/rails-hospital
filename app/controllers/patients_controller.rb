@@ -2,7 +2,7 @@ class PatientsController < ApplicationController
   before_action :set_patient, only: %w[show edit update]
 
   def index
-    @patients = Patient.includes(:room).all
+    @patients = Patient.includes(:room).all.order(:id)
   end
 
   def show
@@ -24,19 +24,20 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    @rooms = Room.all
+    find_room_ids
   end
 
   def update
-    room = Room.find(params[:patient][:room])
+    room = Room.find(params[:patient][:room_id])
 
     new_params = patient_params.merge(room: room)
 
     if @patient.update(new_params)
       redirect_to patients_path
     else
-      @errors = @patient.errors.full_messages.join("/")
-      @rooms = Room.all
+      @errors = @patient.errors.full_messages.join(" / ")
+      find_room_ids
+
       render :edit, status: :unprocessable_entity
     end
   end
@@ -49,5 +50,9 @@ class PatientsController < ApplicationController
 
   def set_patient
     @patient = Patient.includes(:room).find(params[:id])
+  end
+
+  def find_room_ids
+    @room_ids = Room.pluck(:id)
   end
 end

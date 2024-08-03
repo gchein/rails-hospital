@@ -4,10 +4,16 @@
   <%= f.input :age %>
   <%= f.input :cpf %>
   <%= f.input :gender, collection: Patient::AVAILABLE_GENDERS %>
-  <%= f.input :room, collection: @rooms.ids %>
+  <%= f.association :room, collection: @room_ids %>
   <% if @errors %>
-    <div class="mb-3 fw-bold small"><%= @errors %></div>
+    <div class="mb-3 fw-bold small text-danger"><%= @errors %></div>
   <% end %>
   <%= f.button :submit, class: "btn btn-primary" %>
   <% end %>
+
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "Back to all Patients", patients_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
 </div>
