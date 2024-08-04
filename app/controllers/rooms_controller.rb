@@ -1,6 +1,7 @@
 class RoomsController < ApplicationController
+  before_action :set_room, only: %w[show add_patients]
+
   def show
-    @room = Room.includes(:patients).find(params[:id])
     # Include current_occupancy as a scope?
   end
 
@@ -22,9 +23,17 @@ class RoomsController < ApplicationController
     end
   end
 
+  def add_patients
+    @patients_not_in_room = Patient.where(room_id: nil)
+  end
+
   private
 
   def room_params
     params.require(:room).permit(:capacity)
+  end
+
+  def set_room
+    @room = Room.includes(:patients).find(params[:id])
   end
 end

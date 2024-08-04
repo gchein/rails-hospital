@@ -2,7 +2,7 @@
   <%= simple_form_for @patient do |f| %>
   <%= f.input :name %>
   <%= f.input :age %>
-  <%= f.input :cpf %>
+  <%= f.input :cpf, label_html: { class: 'text-uppercase' } %>
   <%= f.input :gender, collection: Patient::AVAILABLE_GENDERS %>
   <%= f.association :room, collection: @room_ids %>
   <% if @errors %>

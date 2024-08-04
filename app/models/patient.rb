@@ -8,11 +8,17 @@ class Patient < ApplicationRecord
   validates :gender, inclusion: { in: AVAILABLE_GENDERS }
   validates :name, :age, :gender, presence: true
 
-  validate :check_room_availability
+  validate :patient_able_to_enter_room?, :changed_to_valid_room?
 
-  def check_room_availability
+  def patient_able_to_enter_room?
     if room_changed? && room.present? && !room.space_left_in_room?
       errors.add(:base, "This room is full")
+    end
+  end
+
+  def changed_to_valid_room?
+    if under_care && room_changed? && !room.present?
+      errors.add(:base, "Please select a valid room")
     end
   end
 end

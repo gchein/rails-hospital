@@ -1,13 +1,15 @@
 <div class="container">
   <h1 class="my-3">All Patients:</h1>
-  <div class="row d-flex justify-content-between">
+  <div class="row d-flex">
     <% @patients.each do |patient| %>
-      <div class="card col-3 mx-1 my-3">
+      <div class="card col-3 mx-5 my-3">
         <%= link_to patient.name, patient %>
         <% if patient.room%>
           <p>Staying at: <%= link_to "Room #{patient.room.id}", room_path(patient.room) %></p>
-        <% else %>
+        <% elsif patient.under_care %>
           <p>Patient currently does not have a room</p>
+        <% else %>
+          <p>Patient currently not under care</p>
         <% end %>
       </div>
     <% end %>

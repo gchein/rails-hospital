@@ -1,0 +1,7 @@
+<div class="container my-3">
+  <h1>Add patients to room <%= @room.id %></h1>
+  <%= simple_form_for @room do |f| %>
+  <%= f.association :patients, collection: @patients_not_in_room, as: :check_boxes %>
+  <%= f.button :submit, class: "btn btn-primary" %>
+  <% end %>
+</div>

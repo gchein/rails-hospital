@@ -9,5 +9,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :patients, only: %w[index show new create edit update]
-  resources :rooms, only: %w[index show new create]
+  resources :rooms, only: %w[index show new create update] do
+    member do
+      get 'add_patients', to: 'rooms#add_patients', as: 'add_patients_to'
+    end
+  end
 end

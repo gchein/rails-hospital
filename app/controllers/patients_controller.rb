@@ -28,7 +28,8 @@ class PatientsController < ApplicationController
   end
 
   def update
-    room = Room.find(params[:patient][:room_id])
+    room_id = params[:patient][:room_id]
+    room = Room.find(room_id) unless room_id.empty?
 
     new_params = patient_params.merge(room: room)
 
@@ -36,8 +37,8 @@ class PatientsController < ApplicationController
       redirect_to patients_path
     else
       @errors = @patient.errors.full_messages.join(" / ")
-      find_room_ids
 
+      edit
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +46,7 @@ class PatientsController < ApplicationController
   private
 
   def patient_params
-    params.require(:patient).permit(:name, :age, :cpf, :gender, :room)
+    params.require(:patient).permit(:name, :age, :cpf, :gender, :room_id)
   end
 
   def set_patient
