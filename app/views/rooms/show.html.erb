@@ -9,9 +9,12 @@
     <% end %>
   </div>
 
-  <div class="row my-3">
-    <div class="d-flex">
-      <%= link_to "Add patients to room", add_patients_to_room_path, class: "btn btn-primary" %>
+  <% if @room.space_left_in_room? %>
+    <div class="row my-3">
+      <div class="d-flex">
+        <%= link_to "Add patients to room", add_patients_to_room_path, class: "btn btn-primary" %>
+      </div>
     </div>
-  </div>
+  <% end %>
+
 </div>

@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: %w[show add_patients]
+  before_action :set_room, only: %w[show update add_patients]
 
   def show
     # Include current_occupancy as a scope?
@@ -24,7 +24,15 @@ class RoomsController < ApplicationController
   end
 
   def add_patients
-    @patients_not_in_room = Patient.where(room_id: nil)
+    @patients_without_room = Patient.where(room_id: nil).order(:name)
+  end
+
+  def update
+    patient_ids = params[:room][:patient_ids].compact_blank
+
+    allocate_patients_to_rooms(patient_ids) unless patient_ids.empty?
+
+    redirect_to @room if @errors.nil?
   end
 
   private
@@ -35,5 +43,19 @@ class RoomsController < ApplicationController
 
   def set_room
     @room = Room.includes(:patients).find(params[:id])
+  end
+
+  def allocate_patients_to_rooms(patient_ids)
+    patient_ids.each do |patient_id|
+      patient = Patient.find(patient_id)
+
+      unless patient.allocate_to_room(@room)
+        @errors = patient.errors.full_messages.join(" / ")
+
+        add_patients
+        render :add_patients, status: :unprocessable_entity
+        break
+      end
+    end
   end
 end
