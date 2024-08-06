@@ -14,10 +14,13 @@
 
 
     <% if @errors %>
-      <div class="mb-3 fw-bold small text-danger"><%= @errors %></div>
+      <%= render partial: 'shared/custom_error_messages', locals: { error_messages: @errors } %>
     <% end %>
 
     <%= f.button :submit, class: "btn btn-primary mb-3" %>
+    <div id="error-messages"
+         data-add-patients-to-room-target="errorMessagesDiv"
+    ></div>
   <% end %>
 
   <div class="row my-3">

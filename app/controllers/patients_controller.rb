@@ -36,7 +36,7 @@ class PatientsController < ApplicationController
     if @patient.update(new_params)
       redirect_to patients_path
     else
-      @errors = @patient.errors.full_messages.join(" / ") if @errors.any?
+      @errors = @patient.errors.full_messages.join(" / ")
 
       edit
       render :edit, status: :unprocessable_entity
@@ -47,7 +47,7 @@ class PatientsController < ApplicationController
     if @patient.discharge
       redirect_to @patient
     else
-      @errors = @patient.errors.full_messages.join(" / ") if @errors.any?
+      @errors = @patient.errors.full_messages.join(" / ")
 
       edit
       render :edit, status: :unprocessable_entity
@@ -57,7 +57,7 @@ class PatientsController < ApplicationController
   private
 
   def patient_params
-    params.require(:patient).permit(:name, :age, :cpf, :gender, :room_id)
+    params.require(:patient).permit(:name, :age, :cpf, :gender, :room_id, :under_care)
   end
 
   def set_patient

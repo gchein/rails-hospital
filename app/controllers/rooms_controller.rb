@@ -24,16 +24,31 @@ class RoomsController < ApplicationController
   end
 
   def add_patients
-    @patients_without_room = Patient.where(room_id: nil).order(:name)
-    @spots_in_room = @room.capacity - @room.current_occupancy
+    respond_to do |format|
+      format.html{
+        @patients_without_room = Patient.where(room_id: nil).order(:name)
+        @spots_in_room = @room.capacity - @room.current_occupancy
+      }
+      format.json{
+        errors_arr = []
+
+        error_hash = params.select { |key| key.match(/error_\d/) }
+        error_hash.each_value do |error|
+          errors_arr << error
+        end
+
+        @errors = errors_arr.join(" / ")
+      }
+    end
   end
 
   def update
     patient_ids = params[:room][:patient_ids].compact_blank
 
+    @errors = []
     allocate_patients_to_rooms(patient_ids) unless patient_ids.empty?
 
-    redirect_to @room if @errors.nil?
+    redirect_to @room if @errors.blank?
   end
 
   private

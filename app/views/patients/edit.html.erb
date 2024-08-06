@@ -1,12 +1,15 @@
 <div class="container my-3">
   <%= simple_form_for @patient do |f| %>
   <%= f.input :name %>
+  <% unless @patient.under_care%>
+    <%= f.input :under_care, label: "Admit into care?" %>
+  <% end %>
   <%= f.input :age %>
   <%= f.input :cpf, label_html: { class: 'text-uppercase' } %>
   <%= f.input :gender, collection: Patient::AVAILABLE_GENDERS %>
   <%= f.association :room, collection: @room_ids %>
   <% if @errors %>
-    <div class="mb-3 fw-bold small text-danger"><%= @errors %></div>
+    <%= render partial: 'shared/custom_error_messages', locals: { error_messages: @errors } %>
   <% end %>
   <%= f.button :submit, class: "btn btn-primary" %>
   <% end %>
