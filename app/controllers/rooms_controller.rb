@@ -25,6 +25,7 @@ class RoomsController < ApplicationController
 
   def add_patients
     @patients_without_room = Patient.where(room_id: nil).order(:name)
+    @spots_in_room = @room.capacity - @room.current_occupancy
   end
 
   def update

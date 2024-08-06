@@ -1,12 +1,28 @@
-<div class="container my-3">
+<div class="container my-3"
+     data-controller="add-patients-to-room"
+     data-add-patients-to-room-spots-in-room-value="<%= @spots_in_room %>">
   <h1 class="mb-3">Add patients to room <%= @room.id %></h1>
   <%= simple_form_for @room do |f| %>
-  <%= f.button :submit, class: "btn btn-primary mb-3" %>
-  <%= f.association :patients, collection: @patients_without_room, as: :check_boxes %>
+    <%= f.association :patients, collection: @patients_without_room, as: :check_boxes,
+          input_html: {
+            data: {
+              add_patients_to_room_target: "patientCheckbox",
+              action: "change->add-patients-to-room#checkSpotsInRoom"
+            }
+          }
+      %>
 
-  <% if @errors %>
-    <div class="mb-3 fw-bold small text-danger"><%= @errors %></div>
+
+    <% if @errors %>
+      <div class="mb-3 fw-bold small text-danger"><%= @errors %></div>
+    <% end %>
+
+    <%= f.button :submit, class: "btn btn-primary mb-3" %>
   <% end %>
 
-  <% end %>
+  <div class="row my-3">
+    <div class="d-flex">
+      <%= link_to "Back to room page", @room, class: "btn btn-secondary" %>
+    </div>
+  </div>
 </div>
