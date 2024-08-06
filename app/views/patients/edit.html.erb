@@ -16,4 +16,13 @@
       <%= link_to "Back to all Patients", patients_path, class: "btn btn-secondary" %>
     </div>
   </div>
+
+  <% if @patient.under_care %>
+    <div class="row my-3">
+      <div class="d-flex">
+        <%= link_to "Discharge patient", discharge_patient_path, class: "btn btn-danger fw-bold",
+            data: { turbo_confirm: "Confirm discharging patient?", turbo_method: :post } %>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -15,6 +15,10 @@ class Patient < ApplicationRecord
     save
   end
 
+  def discharge
+    update(under_care: false, room: nil)
+  end
+
   private
 
   def patient_able_to_enter_room?

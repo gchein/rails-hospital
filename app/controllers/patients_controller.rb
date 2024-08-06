@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %w[show edit update]
+  before_action :set_patient, only: %w[show edit update discharge_patient]
 
   def index
     @patients = Patient.includes(:room).all.order(:id)
@@ -36,7 +36,18 @@ class PatientsController < ApplicationController
     if @patient.update(new_params)
       redirect_to patients_path
     else
-      @errors = @patient.errors.full_messages.join(" / ")
+      @errors = @patient.errors.full_messages.join(" / ") if @errors.any?
+
+      edit
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def discharge_patient
+    if @patient.discharge
+      redirect_to @patient
+    else
+      @errors = @patient.errors.full_messages.join(" / ") if @errors.any?
 
       edit
       render :edit, status: :unprocessable_entity
