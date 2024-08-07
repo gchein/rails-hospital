@@ -25,14 +25,14 @@ class RoomsController < ApplicationController
 
   def add_patients
     respond_to do |format|
-      format.html{
+      format.html {
         @patients_without_room = Patient.where(room_id: nil).order(:name)
         @spots_in_room = @room.capacity - @room.current_occupancy
       }
-      format.json{
+      format.json {
         errors_arr = []
 
-        error_hash = params.select { |key| key.match(/error_\d/) }
+        error_hash = params.select { |key| key.match(/error_\d+/) }
         error_hash.each_value do |error|
           errors_arr << error
         end
