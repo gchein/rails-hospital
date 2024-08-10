@@ -13,6 +13,8 @@ module RailsHospital
       generate.assets false
       generate.helper false
       generate.test_framework :test_unit, fixture: false
+      # My custom generator configs
+      generate.factory_bot dir: 'spec/factories'
     end
 
     # Initialize configuration defaults for originally generated Rails version.
