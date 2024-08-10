@@ -29,7 +29,7 @@ class PatientsController < ApplicationController
 
   def update
     room_id = params[:patient][:room_id]
-    room = Room.find(room_id) unless room_id.empty?
+    room = Room.find(room_id) unless room_id.blank?
 
     new_params = patient_params.merge(room: room)
 

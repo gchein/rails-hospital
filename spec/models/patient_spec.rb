@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Patient, type: :model do
-  context 'validations' do
+  context 'model validations' do
     context 'default validations' do
       let(:patient) { build(:patient) }
 
@@ -83,7 +83,7 @@ RSpec.describe Patient, type: :model do
     end
   end
 
-  context 'associations' do
+  context 'model associations' do
     describe 'rooms association' do
       let(:room_association) { Patient.reflect_on_association(:room) }
 
@@ -98,7 +98,7 @@ RSpec.describe Patient, type: :model do
     end
   end
 
-  context 'custom methods' do
+  context 'model custom methods' do
     describe '#allocate_to_room' do
       it 'should have changed to a new room' do
         rooms = create_list(:room, 2)
@@ -117,6 +117,8 @@ RSpec.describe Patient, type: :model do
       it 'should discharge the patient' do
         room = create(:room)
         patient = build(:patient, room:)
+
+        patient.discharge
 
         expect(patient.under_care).to be false
         expect(patient.room).to be nil
